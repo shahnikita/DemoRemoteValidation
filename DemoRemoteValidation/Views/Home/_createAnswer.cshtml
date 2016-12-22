@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "_createAnswer";
+}
+@model DemoRemoteValidation.Models.AnwerOption
+
+ @{string random = Guid.NewGuid().ToString();}
+
+<textarea name="AnswerName_@random" 
+                  class="form-control" 
+                  cols="20" 
+                  data-val="true"
+                  data-val-required="Answer option is required." 
+                  id="AnswerName_@random" 
+                  maxlength="1000"
+                  rows="2"
+                  style="resize: none;">@Model.Answer</textarea>
+        <span class="field-validation-error">*</span>
+        <span class="field-validation-valid" data-valmsg-for="AnswerName_@random" data-valmsg-replace="true"></span>

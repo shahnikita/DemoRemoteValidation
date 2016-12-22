@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "Index";   
+}
+@model DemoRemoteValidation.Models.AnwerOptionList
+@System.Web.Optimization.Scripts.Render("~/bundles/jquery", "~/bundles/jqueryval")
+
+<script type="text/javascript">
+    var remoteURL = '@Url.Action("IsAnwerText", "Home")';
+    $(document).ready(function () {
+
+
+        //VALIDATE USER EMAIL
+        $.validator.addMethod("validateUserEmail", function (value, element) {
+            var data = { "Answer": $(element).val() };
+            $.ajax(
+            {
+                type: "POST",
+                url: remoteURL,
+                dataType: "json",
+                data: data,
+                success: function (data) {
+                    if (data !== 'true') {
+                        return 'This email address is already registered.';
+                    }
+                    else {
+                        return true;
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert('ajax loading error... ... ' + url + query);
+                    return false;
+                }
+            });
+
+        }, '');
+
+        $("#test").validate();
+
+        $("textarea[id*=Answer]").each(function () {
+            $(this).rules("add", "required");
+            $(this).rules("add", { "validateUserEmail": true });
+        });
+
+    });
+
+
+</script>
+
+@using (Html.BeginForm("Detail", "Home", FormMethod.Post, new { @class = "form-horizontal", @id = "test" }))
+{
+    <div id="AddNew">
+        <div class="" id="AnswerOption">
+
+            <div class="col-md-12 pad divOptions">
+
+                <div class="col-md-8">
+                    <textarea name="Answer_403bea9e-698a-4599-b038-92b8f10abd20"
+                        cols="20"
+                        id="Answer_403bea9e-698a-4599-b038-92b8f10abd20"
+                        maxlength="1000"
+                        rows="2"
+                        style="resize: none;"
+                        aria-required="true"
+                        aria-describedby="Answer_403bea9e-698a-4599-b038-92b8f10abd20-error"
+                        aria-invalid="false">Test answer option 1</textarea>
+                    <span class="field-validation-error">*</span>
+                    <span class="field-validation-valid" data-valmsg-for="Answer_403bea9e-698a-4599-b038-92b8f10abd20" data-valmsg-replace="true"></span>
+
+                </div>
+            </div>
+            <div class="col-md-12 pad divOptions">
+
+                <div class="col-md-8">
+
+
+                    <textarea name="Answer_c80decb9-9fb6-455a-8682-713d7718e73e" class="form-control" cols="20"
+                        id="Answer_c80decb9-9fb6-455a-8682-713d7718e73e" maxlength="1000" rows="2" style="resize: none;">Test answer option 2</textarea>
+                    <span class="field-validation-error">*</span>
+                    <span class="field-validation-valid" data-valmsg-for="Answer_c80decb9-9fb6-455a-8682-713d7718e73e" data-valmsg-replace="true"></span>
+
+                </div>
+
+
+
+                <a class="deleteAnswerOption">
+                    <i class="fa fa-times fa-2x" aria-hidden="true" style="color: #bb1616;"></i>
+                </a>
+
+            </div>
+            <div class="col-md-12 pad divOptions">
+
+
+                <div class="col-md-8">
+
+
+                    <textarea name="Answer_b368b794-769c-499c-8c03-3d6672ad3cbb" class="form-control" cols="20" id="Answer_b368b794-769c-499c-8c03-3d6672ad3cbb" maxlength="1000" rows="2" style="resize: none;">Test answer option 3</textarea>
+                    <span class="field-validation-error">*</span>
+                    <span class="field-validation-valid" data-valmsg-for="Answer_b368b794-769c-499c-8c03-3d6672ad3cbb" data-valmsg-replace="true"></span>
+
+                </div>
+
+
+
+                <a class="deleteAnswerOption">
+                    <i class="fa fa-times fa-2x" aria-hidden="true" style="color: #bb1616;"></i>
+                </a>
+
+            </div>
+            <div class="col-md-12 pad divOptions">
+
+
+                <div class="col-md-8">
+
+
+                    <textarea name="Answer_106b7160-1139-444a-a31d-2dd3a695e6f1" class="form-control" cols="20" id="Answer_106b7160-1139-444a-a31d-2dd3a695e6f1" maxlength="1000" rows="2" style="resize: none;">Test answer option 4</textarea>
+                    <span class="field-validation-error">*</span>
+                    <span class="field-validation-valid" data-valmsg-for="Answer_106b7160-1139-444a-a31d-2dd3a695e6f1" data-valmsg-replace="true"></span>
+
+                </div>
+
+
+
+                <a class="deleteAnswerOption">
+                    <i class="fa fa-times fa-2x" aria-hidden="true" style="color: #bb1616;"></i>
+                </a>
+
+            </div>
+        </div>
+
+        <input type="submit" name="Submit" class="btn btn-primary" value="Submit" />
+    </div>
+}
